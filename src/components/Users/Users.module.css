@@ -1,0 +1,70 @@
+.title{
+    font-weight: normal;
+    margin-bottom: 40px;
+}
+.block{
+    margin-left: 40px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
+.item{
+    display: flex;
+    column-gap: 30px;
+}
+.leftPart{
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+    align-items: center;
+}
+.logo{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+.btn{
+    font-size: 22px;
+    color: white;
+    background-color: green;
+    border: 0;
+    padding: 2px 10px;
+    width: 100px;
+}
+.btn:hover{
+    background-color: lightgreen;
+    color: black;
+}
+.rightPart{
+    border: 2px solid grey;
+    border-radius: 15px;
+    max-height: 100px;
+    width: 600px;
+    padding: 13px;
+
+    display: flex;
+    justify-content: space-between;
+}
+.itemColumn{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100%;
+}
+.selectedNumber{
+    font-weight: 700;
+}
+.numbers{
+    display: flex;
+    column-gap: 5px;
+    margin-bottom: 30px;
+}
+.justNumber{
+    padding: 4px 7px;
+    border: grey 1px solid;
+    cursor: pointer;
+}
+.justNumber:hover{
+    color: white;
+    background-color: black;
+}

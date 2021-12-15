@@ -1,0 +1,16 @@
+.icon{
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    align-items: center;
+}
+.img{
+    display: flex;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: gold;
+}
+.name{
+    color: white;
+}

@@ -1,0 +1,12 @@
+.profile{
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 auto;
+    row-gap: 25px;
+}
+.img{
+    height: 300px;
+    width: 1085px;
+    background-color: blue;
+    display: flex;
+}

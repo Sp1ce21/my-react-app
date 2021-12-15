@@ -1,0 +1,31 @@
+*{
+    margin: 0;
+    padding: 0;
+    
+}
+html {
+    box-sizing: border-box;
+  }
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+ul,li{
+    list-style: none;
+}
+.app-wrapper{
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+}
+.container{
+    max-width: 1400px;
+    margin: 0 auto;
+}
+.app-active{
+    color: red;
+    text-decoration: none;
+}
+.app-row{
+    display: flex;
+    column-gap: 15px;
+}

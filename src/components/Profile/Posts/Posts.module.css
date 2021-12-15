@@ -1,0 +1,28 @@
+.posts{
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+}
+.title{
+    font-size: 25px;
+    font-weight: normal;
+    margin-bottom: 20px;
+}
+.textarea{
+    padding: 10px;
+    margin-bottom: 15px;
+}
+.btn{
+    display: flex;
+    max-width: 70px;
+    padding: 7px;
+    padding-right: 70px;
+    background-color: green;
+    color: white;
+    border: none; 
+    align-self: flex-end;
+    cursor: pointer;
+}
+.column{
+    padding: 20px 0;
+}
