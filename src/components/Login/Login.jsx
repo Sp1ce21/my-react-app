@@ -17,6 +17,7 @@ export const LoginForm = (props) => {
                 required, maxLength10
             ]} name={'password'} type={'password'} placeholder={'Enter password...'} component={Input} />
             <Field name={'rememberMe'} type={'checkbox'} component={'input'} /> remember me
+            {props.error && <div className={s.error}>{props.error}</div>}
             <button>Login</button>
         </form>
     )
@@ -37,6 +38,7 @@ const Login = (props) => {
 
     return (
         <div>
+             
             <h1>Login</h1>
             <LoginReduxForm onSubmit={onSubmit} />
         </div>
