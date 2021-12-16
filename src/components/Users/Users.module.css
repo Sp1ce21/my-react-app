@@ -52,7 +52,7 @@
     min-height: 100%;
 }
 .selectedNumber{
-    font-weight: 700;
+    background-color: #00f7ff;
 }
 .numbers{
     display: flex;

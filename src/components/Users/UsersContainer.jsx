@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from "react-redux";
-import { setCurrentPage, setUsers, setTotalUsersCount, toggleIsFetching, getUsersThunkCreator, followTC, unfollowTC } from "../../redux/users-reducer";
-import Users from "./Users";
-import preloader from '../../assets/images/150x150.gif';
 import { compose } from 'redux';
-import { withAuthRedirect } from '../hoc/withAuthRedirect';
+import preloader from '../../assets/images/150x150.gif';
+import { followTC, getUsersThunkCreator, setCurrentPage, setTotalUsersCount, setUsers, toggleIsFetching, unfollowTC } from "../../redux/users-reducer";
+import { getCurrentPage, getIsFetching, getIsFollowing, getPageSize, getTotalUsersCount, getUsers } from '../../redux/users-selectors';
+import Users from "./Users";
 class UsersContainer extends React.Component {
     componentDidMount() {
         this.props.getUsersThunkCreator(this.props.currentPage, this.props.pageSize);
@@ -29,16 +29,25 @@ class UsersContainer extends React.Component {
         </div>
     }
 }
-
+// let mapStateToProps = (state) => {
+//     return {
+//         users: state.usersPage.users,
+//         pageSize: state.usersPage.pageSize,
+//         totalUsersCount: state.usersPage.totalUsersCount,
+//         currentPage: state.usersPage.currentPage,
+//         isFetching: state.usersPage.isFetching,
+//         isFollowing: state.usersPage.isFollowing,
+//     }
+// }
 
 let mapStateToProps = (state) => {
     return {
-        users: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        isFollowing: state.usersPage.isFollowing,
+        users: getUsers(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        isFollowing: getIsFollowing(state),
     }
 }
 

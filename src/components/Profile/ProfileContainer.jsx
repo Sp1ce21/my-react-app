@@ -38,5 +38,5 @@ export default
     compose(
         connect(mapStateToProps, { getUserData, getUserStatus, updateStatus }),
         withRouter,
-
+        
     )(ProfileContainer);

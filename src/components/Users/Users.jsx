@@ -20,7 +20,7 @@ let Users = (props) => {
             <h2 className={s.title}>Users</h2>
             <div className={s.numbers}>
                 {pages.map(elem => {
-                    return <div className={props.currentPage === elem && s.selectedNumber, s.justNumber}
+                    return <div className={s.justNumber + " " + (props.currentPage === elem ? s.selectedNumber : '')}
                         onClick={() => { props.onPageChanged(elem) }}>{elem}</div>
                 })}
             </div>
