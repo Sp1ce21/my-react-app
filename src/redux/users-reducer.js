@@ -76,7 +76,7 @@ export const toggleFollowing = (isFetching, userId) => ({ type: TOGGLE_FOLLOWING
 export const getUsersThunkCreator = (page, pageSize) => {
     return (dispatch) => {
         dispatch(toggleIsFetching(true));
-        dispatch(setCurrentPage(page));
+        dispatch(setCurrentPage(page)); 
         usersAPI.getUsers(page, pageSize).then(data => {
             dispatch(toggleIsFetching(false));
             dispatch(setUsers(data.items));
