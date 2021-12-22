@@ -21,7 +21,7 @@ export const PostsReduxForm = (props) => {
 export const AddPostReduxForm = reduxForm({form: 'addPost'})(PostsReduxForm)
 
 
-const Posts = (props) => {
+const Posts = React.memo((props) => {
     let posts = props.posts;
     let postsElements = posts.map(p => <Post message={p.text} />);
 
@@ -41,6 +41,7 @@ const Posts = (props) => {
         </div>
     )
 }
+)
 
 
 

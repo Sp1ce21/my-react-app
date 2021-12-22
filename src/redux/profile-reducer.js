@@ -9,11 +9,11 @@ const SET_USER_STATUS = 'SET_USER_STATUS';
 
 let initialState = {
     posts: [
-        {text: 'Hello!' },
-        {text: 'Guys' },
-        {text: 'Welcome to the' },
-        {text: 'Club' },
-        {text: 'Body!' },
+        { text: 'Hello!' },
+        { text: 'Guys' },
+        { text: 'Welcome to the' },
+        { text: 'Club' },
+        { text: 'Body!' },
     ],
     newPostText: '',
     profile: null,
@@ -25,7 +25,7 @@ const profileReducer = (state = initialState, action) => {
         case ADD_POST: {
             return {
                 ...state,
-                posts: [...state.posts, {text: action.newPost}]
+                posts: [...state.posts, { text: action.newPost }]
 
             };
         }
@@ -45,29 +45,20 @@ export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile })
 export const setUserStatus = (status) => ({ type: SET_USER_STATUS, status })
 
 
-export const getUserData = (userId) => {
-    return (dispatch) => {
-        profileAPI.getUserData(userId).then(data => {
-            dispatch(setUserProfile(data));
-        });
-    }
+export const getUserData = (userId) => async (dispatch) => {
+    let response = await profileAPI.getUserData(userId);
+    dispatch(setUserProfile(response.data));
 }
 
-export const getUserStatus = (userId) => {
-    return (dispatch) => {
-        profileAPI.getStatus(userId).then(data => {
-            dispatch(setUserStatus(data));
-        });
-    }
+export const getUserStatus = (userId) => async (dispatch) => {
+    let response = await profileAPI.getStatus(userId)
+    dispatch(setUserStatus(response.data));
 }
 
-export const updateStatus = (status) => {
-    return (dispatch) => {
-        profileAPI.updateStatus(status).then(data => {
-            if (data.resultCode === 0) {
-                dispatch(setUserStatus(status));
-            }
-        });
+export const updateStatus = (status) => async (dispatch) => {
+    let response = await profileAPI.updateStatus(status);
+    if (response.data.resultCode === 0) {
+        dispatch(setUserStatus(status));
     }
 }
 

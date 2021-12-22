@@ -7,9 +7,9 @@ import { connect } from "react-redux";
 import { login } from "../../redux/auth-reducer";
 import { Redirect } from "react-router-dom";
 const maxLength10 = maxLength(30)
-export const LoginForm = (props) => {
+export const LoginForm = ({handleSubmit, error}) => {
     return (
-        <form onSubmit={props.handleSubmit}>
+        <form onSubmit={handleSubmit}>
             <Field validate={[
                 required, maxLength10
             ]} name={'email'} placeholder={'Enter email...'} component={Input} type={'email'} />
@@ -17,7 +17,7 @@ export const LoginForm = (props) => {
                 required, maxLength10
             ]} name={'password'} type={'password'} placeholder={'Enter password...'} component={Input} />
             <Field name={'rememberMe'} type={'checkbox'} component={'input'} /> remember me
-            {props.error && <div className={s.error}>{props.error}</div>}
+            {error && <div className={s.error}>{error}</div>}
             <button>Login</button>
         </form>
     )
@@ -25,14 +25,14 @@ export const LoginForm = (props) => {
 
 export const LoginReduxForm = reduxForm({ form: 'login' })(LoginForm)
 
-const Login = (props) => {
+const Login = ({login, isAuth}) => {
 
     const onSubmit = (formData) => {
-        props.login(formData.email,formData.password, formData.rememberMe);
+        login(formData.email,formData.password, formData.rememberMe);
         console.log(formData);
     }
 
-    if(props.isAuth){
+    if(isAuth){
         return <Redirect to={'/profile'}/>
     }
 

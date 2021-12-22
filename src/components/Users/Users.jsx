@@ -1,29 +1,13 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import userPhoto from '../../assets/images/zoro.jpg';
+import Pagination from "./Pagination";
 import s from './Users.module.css';
 let Users = (props) => {
-    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
-
-    let pages = [];
-    for (let i = 1; i <= pagesCount; i++) {
-        pages.push(i);
-        if (i > 29) {
-            break; //!!!!!!!!!!!!!!!!!!
-        }
-    }
-
-
-
     return (
         <div>
-            <h2 className={s.title}>Users</h2>
-            <div className={s.numbers}>
-                {pages.map(elem => {
-                    return <div className={s.justNumber + " " + (props.currentPage === elem ? s.selectedNumber : '')}
-                        onClick={() => { props.onPageChanged(elem) }}>{elem}</div>
-                })}
-            </div>
+            
+            <Pagination {...props}/>
 
             <div className={s.block}>
                 {
@@ -35,10 +19,10 @@ let Users = (props) => {
                                 </NavLink>
                                 <div>
                                     {u.followed
-                                        ? <button disabled={props.isFollowing.some(id => id == u.id)} className={s.btn} onClick={() => {
+                                        ? <button disabled={props.isFollowing.some(id => id === u.id)} className={s.btn} onClick={() => {
                                             props.unfollowTC(u.id)
                                         }}>Unfollow</button>
-                                        : <button disabled={props.isFollowing.some(id => id == u.id)} className={s.btn} onClick={() => {
+                                        : <button disabled={props.isFollowing.some(id => id === u.id)} className={s.btn} onClick={() => {
                                             props.followTC(u.id)
                                         }}>Follow</button>}
                                 </div>
