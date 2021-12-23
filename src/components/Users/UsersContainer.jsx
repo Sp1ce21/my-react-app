@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import { compose } from 'redux';
 import preloader from '../../assets/images/150x150.gif';
-import { followTC, getUsersThunkCreator, setCurrentPage, setTotalUsersCount, setUsers, toggleIsFetching, unfollowTC } from "../../redux/users-reducer";
+import { followTC, getUsersThunkCreator, setCurrentPage, setTotalUsersCount, setUsers, toggleIsFetching, unfollowTC, updateUser } from "../../redux/users-reducer";
 import { getCurrentPage, getIsFetching, getIsFollowing, getPageSize, getTotalUsersCount, getUsers } from '../../redux/users-selectors';
 import Users from "./Users";
 class UsersContainer extends React.Component {
@@ -16,7 +16,8 @@ class UsersContainer extends React.Component {
 
     render() {
         return <div style={{ position: 'relative' }}>
-            {this.props.isFetching ? <img src={preloader} alt="preloader" style={{ position: 'absolute' }} /> : <Users totalUsersCount={this.props.totalUsersCount}
+            {this.props.isFetching ? <img src={preloader} alt="preloader" style={{ position: 'absolute' }} /> : 
+            <Users totalUsersCount={this.props.totalUsersCount}
                 pageSize={this.props.pageSize}
                 currentPage={this.props.currentPage}
                 onPageChanged={this.onPageChanged}
@@ -25,6 +26,7 @@ class UsersContainer extends React.Component {
                 toggleFollowing={this.props.toggleFollowing}
                 followTC={this.props.followTC}
                 unfollowTC={this.props.unfollowTC}
+                updateUser={this.props.updateUser}
             />}
         </div>
     }
@@ -52,4 +54,5 @@ export default compose(
         getUsersThunkCreator,
         followTC,
         unfollowTC,
+        updateUser
 }))(UsersContainer);

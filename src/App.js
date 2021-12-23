@@ -24,12 +24,13 @@ class App extends React.Component {
                 <div className="app-wrapper container">
                     <HeaderContainer />
                     <div className='app-row'>
-                        <NavContainer />
+                        <NavContainer />    
                         <Switch>
                             <Route path='/profile/:userId?' render={() => <ProfileContainer />} />
                             <Route path='/dialogs' render={() => <DialogsContainer />} />
                             <Route path='/users' render={() => <UsersContainer />} />
                             <Route path='/login' render={() => <Login />} />
+                            <Route path='/' render={() => <ProfileContainer />} />
                         </Switch>
                     </div>
                 </div>
@@ -44,4 +45,4 @@ const mapStateToProps = (state) =>({
 })
 
 export default compose(
-    connect(mapStateToProps, { initialize }))(App);
+    connect(mapStateToProps, { initialize}))(App);

@@ -6,7 +6,7 @@ function Profile(props) {
     return (
         <div className={s.profile}>
             <div className={s.img}></div>
-            <Info profile={props.profile} status={props.status} updateStatus={props.updateStatus}/>
+            <Info profile={props.profile} status={props.status} updateStatus={props.updateStatus} userId={props.userId} uId={props.uId}/>
             <PostsContainer store={props.store}/>
         </div>
     )

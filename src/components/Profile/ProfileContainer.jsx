@@ -19,7 +19,6 @@ class ProfileContainer extends React.Component {
     }
 
     render() {
-        console.log(this.props.match.params.userId)
         return (
             <Profile {...this.props} updateStatus={this.props.updateStatus}/>
         )
@@ -31,6 +30,7 @@ let mapStateToProps = (state) => ({
     status:  state.profilePage.status,
     userId: state.auth.userId,
     isAuth: state.auth.isAuth,
+    uId: state.usersPage.uId,
 });
 
 export default

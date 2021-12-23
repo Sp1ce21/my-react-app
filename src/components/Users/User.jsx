@@ -2,14 +2,17 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import userPhoto from '../../assets/images/zoro.jpg';
 import s from './Users.module.css';
-let User = ({ u, isFollowing, unfollowTC, followTC }) => {
+let User = ({ u, isFollowing, unfollowTC, followTC, updateUser }) => {
+    const onUpdateUser = () => {
+        updateUser(u.id)
+    }
     return (
         <div key={u.id}>
             <div className={s.column}>
                 <div className={s.item}>
                     <div className={s.leftPart}>
                         <NavLink to={'/profile/' + u.id}>
-                            <img src={u.photos.small != null ? u.photos.small : userPhoto} alt="logo" className={s.logo} />
+                            <img src={u.photos.small != null ? u.photos.small : userPhoto} alt="logo" className={s.logo} onClick={onUpdateUser}/>
                         </NavLink>
                         <div>
                             {u.followed
