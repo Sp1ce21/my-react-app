@@ -9,7 +9,8 @@ const SET__CURRENT__PAGE = 'SET__CURRENT__PAGE';
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
 const TOGGLE_FOLLOWING = 'TOGGLE_FOLLOWING';
-const UPDATE_USER = 'UPDATE_USER'
+const UPDATE_USER = 'UPDATE_USER';
+const UPDATE_PORTION = 'UPDATE_PORTION';
 let initialState = {
     users: [],
     pageSize: 5,
@@ -18,6 +19,7 @@ let initialState = {
     isFetching: true,
     isFollowing: [],
     uId: null,
+    currentPortion: 1,
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -60,6 +62,12 @@ const usersReducer = (state = initialState, action) => {
                 uId: action.uId
             }
         }
+        case UPDATE_PORTION: {
+            return {
+                ...state,
+                currentPortion: action.currentPortion
+            }
+        }
         default: return state;
     }
 }
@@ -73,6 +81,7 @@ export const toggleIsFetching = (isFetching) => ({ type: TOGGLE_IS_FETCHING, isF
 export const toggleFollowing = (isFetching, userId) => ({ type: TOGGLE_FOLLOWING, isFetching, userId });
 export const updateUser = (uId) => ({type: UPDATE_USER, uId })
 export const clearUId = () => ({type: UPDATE_USER, uId: null })
+export const updateCurrentPortion = (currentPortion) => ({type: UPDATE_PORTION, currentPortion })
 
 export const getUsersThunkCreator = (page, pageSize) => {
     return (dispatch) => {

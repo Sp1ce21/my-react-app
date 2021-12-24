@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from "react-redux";
 import { compose } from 'redux';
 import preloader from '../../assets/images/150x150.gif';
-import { followTC, getUsersThunkCreator, setCurrentPage, setTotalUsersCount, setUsers, toggleIsFetching, unfollowTC, updateUser } from "../../redux/users-reducer";
-import { getCurrentPage, getIsFetching, getIsFollowing, getPageSize, getTotalUsersCount, getUsers } from '../../redux/users-selectors';
+import { followTC, getUsersThunkCreator, setCurrentPage, setTotalUsersCount, setUsers, toggleIsFetching, unfollowTC, updateUser, updateCurrentPortion } from "../../redux/users-reducer";
+import { getCurrentPage, getIsFetching, getIsFollowing, getPageSize, getTotalUsersCount, getUsers, getCurrentPortion } from '../../redux/users-selectors';
 import Users from "./Users";
 class UsersContainer extends React.Component {
     componentDidMount() {
@@ -17,7 +17,7 @@ class UsersContainer extends React.Component {
     render() {
         return <div style={{ position: 'relative' }}>
             {this.props.isFetching ? <img src={preloader} alt="preloader" style={{ position: 'absolute' }} /> : 
-            <Users totalUsersCount={this.props.totalUsersCount}
+            <Users totalItemsCount={this.props.totalItemsCount}
                 pageSize={this.props.pageSize}
                 currentPage={this.props.currentPage}
                 onPageChanged={this.onPageChanged}
@@ -27,6 +27,8 @@ class UsersContainer extends React.Component {
                 followTC={this.props.followTC}
                 unfollowTC={this.props.unfollowTC}
                 updateUser={this.props.updateUser}
+                updateCurrentPortion={this.props.updateCurrentPortion}
+                currentPortion={this.props.currentPortion}
             />}
         </div>
     }
@@ -36,10 +38,11 @@ let mapStateToProps = (state) => {
     return {
         users: getUsers(state),
         pageSize: getPageSize(state),
-        totalUsersCount: getTotalUsersCount(state),
+        totalItemsCount: getTotalUsersCount(state),
         currentPage: getCurrentPage(state),
         isFetching: getIsFetching(state),
         isFollowing: getIsFollowing(state),
+        currentPortion: getCurrentPortion(state),
     }
 }
 
@@ -54,5 +57,6 @@ export default compose(
         getUsersThunkCreator,
         followTC,
         unfollowTC,
-        updateUser
+        updateUser,
+        updateCurrentPortion
 }))(UsersContainer);

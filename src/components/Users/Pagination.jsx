@@ -1,40 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
 import s from './Users.module.css';
-let Pagination = (props) => {
-    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
+import { useState } from 'react';
+let Pagination = ({ totalItemsCount, portionSize = 15,updateCurrentPortion, currentPortion, ...props }) => {
+    let pagesCount = Math.ceil(totalItemsCount / props.pageSize);
 
     let pages = [];
-    let firstPage = 1;
-    let n = null;
-    let lastPage = props.totalUsersCount;
-    for (let i = 2; i <= pagesCount - 1; i++) {
+    for (let i = 1; i <= pagesCount; i++) {
         pages.push(i);
-        if (i > 15) {
-            break;
-        }
-        if(i === n){
-            i++
-        }
     }
 
+    let portionCount = Math.ceil(pagesCount / portionSize)
+    let leftPortionNumber = (currentPortion - 1) * portionSize + 1;
+    let rightPortionNumber = currentPortion * portionSize ;
 
 
     return (
         <div>
             <h2 className={s.title}>Users</h2>
+                {currentPortion > 1 && <button onClick={() => { updateCurrentPortion(currentPortion - 1) }}>Prev</button>}
+                {currentPortion !== portionCount && <button onClick={() => { updateCurrentPortion(currentPortion + 1) }}>Next</button>}
             <div className={s.numbers}>
 
-                {<div className={s.justNumber + " " + (props.currentPage === firstPage ? s.selectedNumber : '')}
-                    onClick={() => { props.onPageChanged(firstPage) }}>{firstPage}</div>}
 
-                {pages.map(elem => {
-                    return <div className={s.justNumber + " " + (props.currentPage === elem ? s.selectedNumber : '')}
-                        onClick={() => { props.onPageChanged(elem) }}>{elem}</div>
-                })}
 
-                {<div className={s.justNumber + " " + (props.currentPage === lastPage ? s.selectedNumber : '')}
-                    onClick={() => { props.onPageChanged(lastPage) }}>{lastPage}</div>}
-{/* {elem !== firstPage + 1 && '...'} */}
+                {pages
+                    .filter(p => p >= leftPortionNumber && p <= rightPortionNumber)
+                    .map(elem => {
+                        return <div className={s.justNumber + " " + (props.currentPage === elem ? s.selectedNumber : '')}
+                            onClick={() => { props.onPageChanged(elem); }}>{elem}</div>
+                    })}
+                
+
             </div>
         </div>
     )
