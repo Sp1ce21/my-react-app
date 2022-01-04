@@ -18,3 +18,7 @@
 .point{
     margin-bottom: 5px;
 }
+.column{
+    display: flex;
+    flex-direction: column;
+}

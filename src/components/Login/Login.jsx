@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { login } from "../../redux/auth-reducer";
 import { Redirect } from "react-router-dom";
 const maxLength10 = maxLength(30)
-export const LoginForm = ({handleSubmit, error}) => {
+export const LoginForm = ({handleSubmit, error, captchaUrl}) => {
     return (
         <form onSubmit={handleSubmit}>
             <Field validate={[
@@ -18,6 +18,13 @@ export const LoginForm = ({handleSubmit, error}) => {
             ]} name={'password'} type={'password'} placeholder={'Enter password...'} component={Input} />
             <Field name={'rememberMe'} type={'checkbox'} component={'input'} /> remember me
             {error && <div className={s.error}>{error}</div>}
+            {captchaUrl && 
+            <div className={s.column}>
+            <img src={captchaUrl} alt="captcha"/>
+            <Field validate={[
+                required, maxLength10
+            ]} name={'captcha'} type={'text'} placeholder={'Enter captcha...'} component={Input} />
+            </div>}
             <button>Login</button>
         </form>
     )
@@ -25,10 +32,10 @@ export const LoginForm = ({handleSubmit, error}) => {
 
 export const LoginReduxForm = reduxForm({ form: 'login' })(LoginForm)
 
-const Login = ({login, isAuth}) => {
+const Login = ({login, isAuth, captchaUrl}) => {
 
     const onSubmit = (formData) => {
-        login(formData.email,formData.password, formData.rememberMe);
+        login(formData.email,formData.password, formData.rememberMe, formData.captcha);
         console.log(formData);
     }
 
@@ -40,13 +47,14 @@ const Login = ({login, isAuth}) => {
         <div>
              
             <h1>Login</h1>
-            <LoginReduxForm onSubmit={onSubmit} />
+            <LoginReduxForm onSubmit={onSubmit} captchaUrl={captchaUrl}/>
         </div>
     )
 }
 
 const mapStatetoProps = (state) => ({
-    isAuth: state.auth.isAuth
+    isAuth: state.auth.isAuth,
+    captchaUrl: state.auth.captchaUrl
 })
 
 export default connect(mapStatetoProps, {login})(Login)

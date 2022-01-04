@@ -5,3 +5,7 @@ form{
 .error{
     color: red;
 } 
+.column {
+    display: flex;
+    flex-direction: column;
+}
