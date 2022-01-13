@@ -1,6 +1,4 @@
-import React, { useEffect } from "react";
 import s from './Users.module.css';
-import { useState } from 'react';
 let Pagination = ({ totalItemsCount, portionSize = 15,updateCurrentPortion, currentPortion, ...props }) => {
     let pagesCount = Math.ceil(totalItemsCount / props.pageSize);
 

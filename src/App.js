@@ -37,7 +37,7 @@ class App extends React.Component {
                             <Route path='/dialogs' render={() => <Suspense fallback={<Preloader/>}><DialogsContainer /></Suspense>} />
                             <Route path='/users' render={() => <Suspense fallback={<Preloader/>}><UsersContainer /></Suspense>} />
                             <Route path='/login' render={() => <Login />} />
-                            <Route path='*' render={() => <div>404 Not Found</div>} />
+                            {/* <Route path='*' render={() => <div>404 Not Found</div>} /> */}
                             <Route path='/' render={() => <Suspense fallback={<Preloader/>}>
                                 <ProfileContainer />
                             </Suspense>} />
@@ -47,7 +47,6 @@ class App extends React.Component {
                 </div>
             </Router>
         );
-
     }
 }
 
