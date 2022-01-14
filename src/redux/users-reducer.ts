@@ -1,6 +1,8 @@
 import { usersAPI } from "../api/api";
 import { updateObjectInArray } from "../utils/object-helpers";
-
+import { usersType } from "../types/types";
+import { photosType } from "../types/types";
+import { itemsType } from "../types/types";
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -12,34 +14,15 @@ const TOGGLE_FOLLOWING = 'TOGGLE_FOLLOWING';
 const UPDATE_USER = 'UPDATE_USER';
 const UPDATE_PORTION = 'UPDATE_PORTION';
 
-type photosType = {
-    small: string | null
-    large: string | null
-}
-
-type itemsType = {
-    id: number
-    name: string
-    status: string
-    photos: photosType
-    followed: boolean
-}
-
-type usersType = {
-    items: itemsType
-    totalCount: number
-    error: string
-}
-
 let initialState = {
-    users: [] as Array<usersType> | null,
-    pageSize: 5 as number | null,
-    totalUsersCount: 0 as number | null,
-    currentPage: 1 as number | null,
+    users: [] as Array<itemsType>,
+    pageSize: 5 as number,
+    totalUsersCount: 0 as number,
+    currentPage: 1 as number,
     isFetching: true as boolean,
     isFollowing: [] as Array<number>,
     uId: null as number | null,
-    currentPortion: 1 as number | null,
+    currentPortion: 1 as number,
 };
 
 type initialStateType = typeof initialState;
@@ -95,15 +78,15 @@ const usersReducer = (state = initialState, action: any): initialStateType => {
 }
 type followType = {
     type: typeof FOLLOW,
-    userId: number | null
+    userId: number
 }
-export const follow = (userId: number | null): followType => ({ type: FOLLOW, userId });
+export const follow = (userId: number): followType => ({ type: FOLLOW, userId });
 
 type unfollowType = {
     type: typeof UNFOLLOW,
-    userId: number | null
+    userId: number
 }
-export const unfollow = (userId: number | null): unfollowType => ({ type: UNFOLLOW, userId });
+export const unfollow = (userId: number): unfollowType => ({ type: UNFOLLOW, userId });
 
 type setUsersType = {
     type: typeof SET_USERS,
@@ -113,15 +96,15 @@ export const setUsers = (users: Array<usersType>): setUsersType => ({ type: SET_
 
 type setCurrentPageType = {
     type: typeof SET__CURRENT__PAGE,
-    currentPage: number | null
+    currentPage: number
 }
-export const setCurrentPage = (currentPage: number | null): setCurrentPageType => ({ type: SET__CURRENT__PAGE, currentPage });
+export const setCurrentPage = (currentPage: number): setCurrentPageType => ({ type: SET__CURRENT__PAGE, currentPage });
 
 type setTotalUsersCountType = {
     type: typeof SET_TOTAL_USERS_COUNT,
-    count: number | null
+    count: number
 }
-export const setTotalUsersCount = (totalUsersCount: number | null): setTotalUsersCountType => ({ type: SET_TOTAL_USERS_COUNT, count: totalUsersCount });
+export const setTotalUsersCount = (totalUsersCount: number): setTotalUsersCountType => ({ type: SET_TOTAL_USERS_COUNT, count: totalUsersCount });
 
 type toggleIsFetchingType = {
     type: typeof TOGGLE_IS_FETCHING,

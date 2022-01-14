@@ -1,6 +1,17 @@
 import s from './Users.module.css';
-let Pagination = ({ totalItemsCount, portionSize = 15,updateCurrentPortion, currentPortion, ...props }) => {
-    let pagesCount = Math.ceil(totalItemsCount / props.pageSize);
+
+type Props = {
+    totalItemsCount: number
+    portionSize?: number
+    updateCurrentPortion: Function
+    currentPortion: number 
+    currentPage: number
+    onPageChanged: (currentPage: number)=>void
+    pageSize: number
+}
+
+let Pagination: React.FC<Props> = ({ totalItemsCount, portionSize = 15,updateCurrentPortion, currentPortion, currentPage, onPageChanged, pageSize }) => {
+    let pagesCount = Math.ceil(totalItemsCount / pageSize);
 
     let pages = [];
     for (let i = 1; i <= pagesCount; i++) {
@@ -24,8 +35,8 @@ let Pagination = ({ totalItemsCount, portionSize = 15,updateCurrentPortion, curr
                 {pages
                     .filter(p => p >= leftPortionNumber && p <= rightPortionNumber)
                     .map(elem => {
-                        return <div className={s.justNumber + " " + (props.currentPage === elem ? s.selectedNumber : '')}
-                            onClick={() => { props.onPageChanged(elem); }}>{elem}</div>
+                        return <div className={s.justNumber + " " + (currentPage === elem ? s.selectedNumber : '')}
+                            onClick={() => { onPageChanged(elem); }}>{elem}</div>
                     })}
                 
 
