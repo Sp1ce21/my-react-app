@@ -1,8 +1,11 @@
+import { appStateType } from './store';
 import { usersAPI } from "../api/api";
 import { updateObjectInArray } from "../utils/object-helpers";
 import { usersType } from "../types/types";
 import { photosType } from "../types/types";
 import { itemsType } from "../types/types";
+import { Dispatch } from 'redux';
+import { ThunkAction } from 'redux-thunk';
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -15,7 +18,7 @@ const UPDATE_USER = 'UPDATE_USER';
 const UPDATE_PORTION = 'UPDATE_PORTION';
 
 let initialState = {
-    users: [] as Array<itemsType>,
+    users: [] as Array<any>,
     pageSize: 5 as number,
     totalUsersCount: 0 as number,
     currentPage: 1 as number,
@@ -27,7 +30,9 @@ let initialState = {
 
 type initialStateType = typeof initialState;
 
-const usersReducer = (state = initialState, action: any): initialStateType => {
+type actionsTypes = followType | unfollowType | setUsersType | setCurrentPageType | setTotalUsersCountType | toggleIsFetchingType | toggleFollowingType | updateUserType | clearUIdType | updateCurrentPortionType
+
+const usersReducer = (state = initialState, action: actionsTypes): initialStateType => {
     switch (action.type) {
         case FOLLOW:
             return {
@@ -76,6 +81,9 @@ const usersReducer = (state = initialState, action: any): initialStateType => {
         default: return state;
     }
 }
+
+
+
 type followType = {
     type: typeof FOLLOW,
     userId: number
@@ -137,8 +145,13 @@ type updateCurrentPortionType = {
 }
 export const updateCurrentPortion = (currentPortion: number): updateCurrentPortionType => ({ type: UPDATE_PORTION, currentPortion })
 
-export const getUsersThunkCreator = (page: number, pageSize: number) => {
-    return (dispatch: any) => {
+
+type getStateType = ()=> appStateType;
+type dispatchType = Dispatch<actionsTypes>;
+type thunkType = ThunkAction<void, appStateType, unknown, actionsTypes>
+
+export const getUsersThunkCreator = (page: number, pageSize: number): thunkType => {
+    return (dispatch, getState) => {
         dispatch(toggleIsFetching(true));
         dispatch(setCurrentPage(page));
         usersAPI.getUsers(page, pageSize).then(data => {
@@ -149,7 +162,7 @@ export const getUsersThunkCreator = (page: number, pageSize: number) => {
     }
 }
 
-const followUnfollowFlow = async (dispatch: any, userId: number, method: any, actionCreator: any) => {
+const _followUnfollowFlow = async (dispatch: dispatchType, userId: number, method: any, actionCreator: (userId: number)=>followType | unfollowType) => {
     dispatch(toggleFollowing(true, userId))
     let response = await method(userId);
     if (response.data.resultCode === 0) {
@@ -157,15 +170,15 @@ const followUnfollowFlow = async (dispatch: any, userId: number, method: any, ac
     }
     dispatch(toggleFollowing(false, userId))
 }
-export const unfollowTC = (userId: number) => {
-    return async (dispatch: any) => {
-        followUnfollowFlow(dispatch, userId, usersAPI.getUnfollow.bind(usersAPI), unfollow)
+export const unfollowTC = (userId: number): thunkType => {
+    return async (dispatch) => {
+        _followUnfollowFlow(dispatch, userId, usersAPI.getUnfollow.bind(usersAPI), unfollow)
     }
 }
 
-export const followTC = (userId: number) => {
-    return async (dispatch: any) => {
-        followUnfollowFlow(dispatch, userId, usersAPI.getFollow.bind(usersAPI), follow);
+export const followTC = (userId: number): thunkType => {
+    return async (dispatch) => {
+        _followUnfollowFlow(dispatch, userId, usersAPI.getFollow.bind(usersAPI), follow);
     }
 }
 

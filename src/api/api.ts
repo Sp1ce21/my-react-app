@@ -10,16 +10,16 @@ const instance = axios.create({
 });
 
 export const usersAPI = {
-    getUsers(currentPage = 1, pageSize = 10) {
+    getUsers(currentPage: number = 1, pageSize: number = 10) {
         return instance.get(`users?page=${currentPage}&count=${pageSize}`)
             .then(response => {
                 return response.data;
             })
     },
-    getFollow(userId) {
+    getFollow(userId: number) {
         return instance.post(`follow/${userId}`)
     },
-    getUnfollow(userId) {
+    getUnfollow(userId: number) {
         return instance.delete(`follow/${userId}`)
     },
 }
@@ -28,7 +28,7 @@ export const authAPI = {
     getLogin() {
         return instance.get(`auth/me`)
     },
-    login(email, password, rememberMe = false, captcha) {
+    login(email: string | null, password: string | null, rememberMe: boolean = false, captcha: string | null) {
         return instance.post(`auth/login`, { email, password, rememberMe, captcha });
     },
     logout() {
@@ -37,16 +37,16 @@ export const authAPI = {
 }
 
 export const profileAPI = {
-    getUserData(userId) {
+    getUserData(userId: number) {
         return instance.get(`profile/${userId}`)
     },
-    getStatus(userId) {
+    getStatus(userId: number) {
         return instance.get(`profile/status/${userId}`)
     },
-    updateStatus(status) {
+    updateStatus(status: string) {
         return instance.put(`profile/status`, { status: status })
     },
-    updateProfilePhoto(photo) {
+    updateProfilePhoto(photo: string) {
         const formData = new FormData();
         formData.append("image", photo)
         return instance.put(`profile/photo`, formData, {
