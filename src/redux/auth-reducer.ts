@@ -1,3 +1,4 @@
+import { ResultCodes } from './../api/api';
 import { stopSubmit } from "redux-form";
 import { authAPI, securityAPI } from "../api/api";
 
@@ -45,7 +46,7 @@ export const setCaptchaUrl = (captchaUrl: string | null): setCaptchaUrlType => (
 
 export const getLogin = () => async (dispatch: any) => {
     let response = await authAPI.getLogin();
-    if (response.data.resultCode === 0) {
+    if (response.data.resultCode === ResultCodes.Success) {
         let { id, email, login } = response.data.data;
         dispatch(setAuthUserData(id, email, login, true));
     }

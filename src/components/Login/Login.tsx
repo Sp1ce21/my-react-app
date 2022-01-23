@@ -1,13 +1,14 @@
 import React from "react";
 import s from './Login.module.css';
-import { Field, reduxForm } from 'redux-form';
+import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import { required, maxLength } from '../../utils/validators/validators';
 import { Input } from '../common/FormsControls/FormsControls'
 import { connect } from "react-redux";
 import { login } from "../../redux/auth-reducer";
 import { Redirect } from "react-router-dom";
+import { appStateType } from "../../redux/store";
 const maxLength10 = maxLength(30)
-export const LoginForm = ({handleSubmit, error, captchaUrl}) => {
+export const LoginForm: React.FC<InjectedFormProps<loginFormValuesType, loginFormOwnProps> & loginFormOwnProps> = ({handleSubmit, error, captchaUrl}) => {
     return (
         <form onSubmit={handleSubmit}>
             <Field validate={[
@@ -30,11 +31,19 @@ export const LoginForm = ({handleSubmit, error, captchaUrl}) => {
     )
 }
 
-export const LoginReduxForm = reduxForm({ form: 'login' })(LoginForm)
+export const LoginReduxForm = reduxForm<loginFormValuesType, loginFormOwnProps>({ form: 'login' })(LoginForm)
 
-const Login = ({login, isAuth, captchaUrl}) => {
 
-    const onSubmit = (formData) => {
+type loginFormValuesType = {
+    email: string
+    password: string
+    rememberMe: boolean
+    captcha: string
+}
+
+const Login: React.FC<mapStateToProps & mapDispatchToProps> = ({login, isAuth, captchaUrl}) => {
+
+    const onSubmit = (formData: loginFormValuesType) => {
         login(formData.email,formData.password, formData.rememberMe, formData.captcha);
         console.log(formData);
     }
@@ -52,9 +61,25 @@ const Login = ({login, isAuth, captchaUrl}) => {
     )
 }
 
-const mapStatetoProps = (state) => ({
+type mapStateToProps = {
+    captchaUrl: string | null
+    isAuth: boolean
+}
+type mapDispatchToProps = {
+    login: (
+        email: string | null, 
+        password: string | null, 
+        rememberMe: boolean, 
+        captcha: string | null
+        )=>void
+}
+type loginFormOwnProps = {
+    captchaUrl: string | null
+}
+
+const mapStateToProps = (state: appStateType): mapStateToProps => ({
     isAuth: state.auth.isAuth,
     captchaUrl: state.auth.captchaUrl
 })
 
-export default connect(mapStatetoProps, {login})(Login)
+export default connect(mapStateToProps, {login})(Login)

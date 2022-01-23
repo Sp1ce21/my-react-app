@@ -24,12 +24,34 @@ export const usersAPI = {
     },
 }
 
+export enum ResultCodes {
+    Success = 0,
+    Error = 1,
+}
+
+type meResponseType = {
+    data: {
+        id: number
+        email: string
+        login: string
+    }
+    resultCode: number
+    messages: Array<string>
+}
+type loginResponseType = {
+    data: {
+        userId: number
+    }
+    resultCode: number
+    messages: Array<string>
+}
+
 export const authAPI = {
     getLogin() {
-        return instance.get(`auth/me`)
+        return instance.get<meResponseType>(`auth/me`)
     },
     login(email: string | null, password: string | null, rememberMe: boolean = false, captcha: string | null) {
-        return instance.post(`auth/login`, { email, password, rememberMe, captcha });
+        return instance.post<loginResponseType>(`auth/login`, { email, password, rememberMe, captcha });
     },
     logout() {
         return instance.delete(`auth/login`);
